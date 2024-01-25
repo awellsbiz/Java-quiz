@@ -41,4 +41,9 @@ public class QuestionController {
     return questionService.addQuestion(question);
   }
 
+  @PostMapping("addBulk")
+  public String addQuestion(@RequestBody List<Question> question) {
+    return questionService.addQuestion(question);
+  }
+
 }
