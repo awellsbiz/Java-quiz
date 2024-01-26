@@ -1,6 +1,7 @@
 package com.awells.quizapp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +27,11 @@ public class QuestionController {
 
   @GetMapping("allQuestions")
   // below i want to get data from service layer
-  public List<Question> getAllQuestions() {
+  public ResponseEntity<List<Question>> getAllQuestions() {
+    // response entity helps send data code and data to client. to fo that we return
+    // the constructor of Response entity we pass two arguments the data and the
+    // HTTPStatus
+
     return questionService.getAllQuestions();
   }
 

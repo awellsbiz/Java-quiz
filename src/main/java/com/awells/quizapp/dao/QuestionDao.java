@@ -1,6 +1,7 @@
 package com.awells.quizapp.dao; //main job is to interact with the database - handles all operations related to fetching and storing data in datbase  (Data Access Object) 
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.awells.quizapp.model.Question;
@@ -15,4 +16,7 @@ public interface QuestionDao extends JpaRepository<Question, Integer> { // JPA w
                                                                         // name that maps to the table name.
   List<Question> findByCategory(String category); // JPA is smart to find this query because its an actual column inside
                                                   // of the table
+
+  @Query(value = "SELECT * FROM question q WHERE q.category = :category ORDER BY RANDOM() LIMIT :numQ", nativeQuery = true)
+  List<Question> findRandomQuestionsByCategory(String category, int numQ);
 }

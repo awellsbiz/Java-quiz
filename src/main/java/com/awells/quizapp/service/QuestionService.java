@@ -1,8 +1,11 @@
 package com.awells.quizapp.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.awells.quizapp.dao.QuestionDao;
@@ -20,8 +23,16 @@ public class QuestionService {
   QuestionDao questionDao; // -This is how you are matching the beans by declaring the class right here so
                            // that we can call the methods to get information from the DAO
 
-  public List<Question> getAllQuestions() {
-    return questionDao.findAll();// sending this to the DAO to talk with the Database.
+  public ResponseEntity<List<Question>> getAllQuestions() { // have to wrap the Response Entity obj - this will match
+                                                            // the type for when the construtor is declared.
+
+    try {
+      return new ResponseEntity<>(questionDao.findAll(), HttpStatus.OK); // sending this to the DAO to talk with the DB
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
   }
 
   public List<Question> getQuestionsByCategory(String category) { // fetch category from DAO
